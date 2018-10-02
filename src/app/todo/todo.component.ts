@@ -27,7 +27,7 @@ import { Todo } from './todo';
     </tr>
     <tr *ngFor="let todo of todos">
       <td>{{todo.id}}</td>
-      <td class="{{todo.done? 'done': ''}}">{{todo.title}}</td>
+      <td [class.done]="todo.done">{{todo.title}}</td>
       <td>
         <button type="button" (click)="setDone(todo)">
           <i class="fas fa-check-square fa-lg"></i>
@@ -69,7 +69,7 @@ export class TodoComponent implements OnInit {
   
   setDone(todo: Todo) {
     todo.done = !todo.done;
-    this.todoHttpService.update(todo);
+    this.todoHttpService.update(todo).subscribe();
   }
 
   remove(id: number) {

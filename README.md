@@ -24,7 +24,7 @@ ng serve -o
 ```
 ng build todo --prod
 cd dist
-http-server -o http://localhost:8080
+http-server -o
 ```
 
 ## Development server
