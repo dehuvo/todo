@@ -25,14 +25,14 @@ import { Todo } from './todo';
       <th>Title</th>
       <th>Menu</th>
     </tr>
-    <tr *ngFor="let todo of todos">
+    <tr *ngFor="let todo of todos; index as i">
       <td>{{todo.id}}</td>
       <td [class.done]="todo.done">{{todo.title}}</td>
       <td>
         <button type="button" (click)="setDone(todo)">
           <i class="fas fa-check-square fa-lg"></i>
         </button>
-        <button type="button" (click)="remove(todo.id)">
+        <button type="button" (click)="remove(todo.id, i)">
           <i class="fas fa-minus-square fa-lg"></i>
         </button>
       </td>
@@ -49,7 +49,7 @@ import { Todo } from './todo';
 export class TodoComponent implements OnInit {
   todos: Todo[];
 
-  constructor(private todoHttpService: TodoHttpService) { }
+  constructor(private todoHttpService: TodoHttpService) {}
 
   ngOnInit() {
     this.todoHttpService.get().subscribe(todos => this.todos = todos);
@@ -59,25 +59,19 @@ export class TodoComponent implements OnInit {
     const todo = Object.assign({ done: false }, form.value);
     todo.title = todo.title.trim();
     this.todoHttpService.add(todo).subscribe(
-      id => {
-        todo.id = id;
+      todo => {
         this.todos.push(todo);
         form.reset();
       }
     );
   }
-  
+
   setDone(todo: Todo) {
     todo.done = !todo.done;
     this.todoHttpService.update(todo).subscribe();
   }
 
-  remove(id: number) {
-    this.todoHttpService.remove(id).subscribe(
-      () => {
-        const index = this.todos.findIndex(todo => todo.id === id);
-        this.todos.splice(index, 1);
-      }
-    );
+  remove(id: number, i: number) {
+    this.todoHttpService.remove(id).subscribe(() => this.todos.splice(i, 1));
   }
 }

@@ -26,6 +26,7 @@ ng build todo --prod
 cd dist
 http-server -o
 ```
+* 브라우저에서 `vue-todo.html`을 실행합니다.
 
 ## Development server
 

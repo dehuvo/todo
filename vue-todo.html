@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Todo-List</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous"></head>
+  <style>
+.done {
+  text-decoration: line-through;
+}
+  </style>
+</head>
+
+<body>
+  <div class="container" id="app">
+    <h3>To-Do List</h3>
+    <div class="form-inline">
+      <label>새 항목: &nbsp;
+        <input type="text" v-model="newTitle" class="form-control">
+      </label>
+      <button type="submit" @click="add()" class="btn">
+        <i class="fas fa-plus-square fa-lg"></i>
+      </button>
+    </div>
+    <br>
+    <table class="table table-striped">
+      <tr>
+        <th>No</th>
+        <th>Title</th>
+        <th>Menu</th>
+      </tr>
+      <tr v-for="(todo, i) in todos" :key="todo.id">
+        <td>{{ todo.id }}</td>
+        <td :class="{ done: todo.done }">{{ todo.title }}</td>
+        <td>
+          <button type="button" @click="setDone(todo)">
+            <i class="fas fa-check-square fa-lg"></i>
+          </button>
+          <button type="button" @click="remove(todo.id, i)">
+            <i class="fas fa-minus-square fa-lg"></i>
+          </button>
+        </td>
+      </tr>
+    </table>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.5.2/dist/vue.js"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script>
+const URL = 'http://localhost:3000/data';
+
+var v = new Vue({
+  el: '#app',
+  data: {
+    todos: [],
+    newTitle: ''
+  },
+  created() {
+    axios.get(URL).then(response => this.todos = response.data);
+  },
+  methods: {
+    add() {
+      const title = this.newTitle.trim();
+      if (title) {
+        axios.post(URL, { title, done: false }).then(
+          response => {
+            this.todos.push(response.data);
+            this.newTitle = '';
+          }
+        );
+      }
+    },
+    setDone(todo) {
+      todo.done = !todo.done;
+      axios.patch(URL + '/' + todo.id, todo);
+    },
+    remove(id, i) {
+      axios.delete(URL + '/' + id).then(() => this.todos.splice(i, 1));
+    }
+  }
+});
+  </script>
+</body>
+
+</html>
