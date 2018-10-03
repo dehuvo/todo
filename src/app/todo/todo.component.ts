@@ -15,7 +15,7 @@ import { Todo } from './todo';
              required pattern="\\s*\\S.*" class="form-control">
     </label>
     <button type="submit" [disabled]="f.invalid" class="btn">
-      <i class="fas fa-plus-square fa-lg"></i>
+      <i class="fas fa-plus fa-lg"></i>
     </button>
   </form>
   <br>
@@ -30,10 +30,10 @@ import { Todo } from './todo';
       <td [class.done]="todo.done">{{todo.title}}</td>
       <td>
         <button type="button" (click)="setDone(todo)">
-          <i class="fas fa-check-square fa-lg"></i>
+          <i class="fas fa-check fa-lg"></i>
         </button>
         <button type="button" (click)="remove(todo.id, i)">
-          <i class="fas fa-minus-square fa-lg"></i>
+          <i class="fas fa-times fa-lg"></i>
         </button>
       </td>
     </tr>

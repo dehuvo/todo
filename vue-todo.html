@@ -23,7 +23,7 @@
         <input type="text" v-model="newTitle" class="form-control">
       </label>
       <button type="submit" @click="add()" class="btn">
-        <i class="fas fa-plus-square fa-lg"></i>
+        <i class="fas fa-plus fa-lg"></i>
       </button>
     </div>
     <br>
@@ -38,10 +38,10 @@
         <td :class="{ done: todo.done }">{{ todo.title }}</td>
         <td>
           <button type="button" @click="setDone(todo)">
-            <i class="fas fa-check-square fa-lg"></i>
+            <i class="fas fa-check fa-lg"></i>
           </button>
           <button type="button" @click="remove(todo.id, i)">
-            <i class="fas fa-minus-square fa-lg"></i>
+            <i class="fas fa-times fa-lg"></i>
           </button>
         </td>
       </tr>
