@@ -8,18 +8,13 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 ```
 git clone https://github.com/dehuvo/todo
 cd todo
-npm i
+json-server db.json
 ```
 * 콘솔 창-2를 열고 todo 폴더에서 다음 명령을 실행합니다: 
 ```
-npm i -g http-server
-npm i -g json-server
-json-server db.json
-```
-* 콘솔 창-1에서 이어서 다음 명령을 실행합니다:
-```
+npm i
 ng serve -o
-``` 
+```
 * 콘솔 창-3을 열고 todo 폴더에서 다음 명령을 실행합니다: 
 ```
 ng build todo --prod
